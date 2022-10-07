@@ -5,11 +5,10 @@ from odoo.exceptions import ValidationError
 
 
 class InterCompanyTransfer(models.TransientModel):
-
     _name = 'inter.company.transfer'
 
     company_id = fields.Many2one('res.company', required=True,
-        default=lambda self: self.env.user.company_id)
+                                 default=lambda self: self.env.user.company_id)
     dest_company_id = fields.Many2one('res.company', string='Destination Company')
     location_id = fields.Many2one('stock.location', string='Source Location')
     dest_location_id = fields.Many2one('stock.location', string='Destination Location')
@@ -41,7 +40,7 @@ class InterCompanyTransfer(models.TransientModel):
         if self.dest_company_id:
             self.dest_location_id = False
             return {
-                'domain':{
+                'domain': {
                     'dest_location_id': [
                         ('company_id', '=', self.dest_company_id.id),
                         ('usage', '=', 'internal')
@@ -126,6 +125,9 @@ class InterCompanyTransfer(models.TransientModel):
             'move_lines': out_move_lines,
         })
         out_picking_id = StockPicking.create(out_picking_value)
+        out_picking_id.action_assign()
+        out_picking_id.action_set_quantities_to_reservation()
+        out_picking_id.button_validate()
 
         in_picking_value.update({
             'intercompany_transfer': True,
@@ -140,4 +142,6 @@ class InterCompanyTransfer(models.TransientModel):
             'move_lines': in_move_lines,
         })
         in_picking_id = StockPicking.create(in_picking_value)
-        in_picking_id.move_lines.write({'state': 'waiting'})
+        in_picking_id.action_confirm()
+        in_picking_id.action_set_quantities_to_reservation()
+        in_picking_id.button_validate()

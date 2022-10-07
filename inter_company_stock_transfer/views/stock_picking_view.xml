@@ -4,7 +4,7 @@
         <field name="name">intercompany.transfer.tree.view</field>
         <field name="model">stock.picking</field>
         <field name="arch" type="xml">
-            <tree create="0">
+            <tree>
                 <field name="name"/>
                 <field name="location_id"/>
                 <field name="location_dest_id"/>
