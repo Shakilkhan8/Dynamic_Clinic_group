@@ -88,6 +88,10 @@ class InterCompanyTransfer(models.TransientModel):
         out_move_lines = []
         in_move_lines = []
         for line in self.line_ids:
+            if float(line.available_qty) < line.product_uom_qty:
+                raise ValidationError(
+                    _(f'Initial Demand Can not be greater then available Quantity Check line Product {line.product_id.name}'))
+
             out_move_lines.append((0, 0, {
                 'product_id': line.product_id.id,
                 'product_uom': line.product_uom.id,

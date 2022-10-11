@@ -21,13 +21,14 @@
                             <field name="line_ids">
                                 <tree editable="bottom">
                                     <field name="product_id" required="1"/>
+                                    <field name="available_qty"/>
                                     <field name="name" invisible="1"
-                                        force_save="1"/>
+                                           force_save="1"/>
                                     <field name="product_uom_qty"/>
                                     <field name="product_uom"
-                                        options="{'no_open': True, 'no_create': True}"
-                                        string="Unit of Measure"
-                                        groups="uom.group_uom" force_save="1" required="1"/>
+                                           options="{'no_open': True, 'no_create': True}"
+                                           string="Unit of Measure"
+                                           groups="uom.group_uom" force_save="1" required="1"/>
                                 </tree>
                             </field>
                         </page>
@@ -51,12 +52,12 @@
     </record>
 
     <menuitem id="menu_inter_company_transfer_root"
-            name="Inter Company Transfer"
-            parent="stock.menu_stock_root"/>
+              name="Inter Company Transfer"
+              parent="stock.menu_stock_root"/>
 
     <menuitem id="menu_inter_company_stock_transfer"
-            name="Transfer Stock"
-            action="inter_company_stock_transfer.action_inter_company_transfer"
-            parent="inter_company_stock_transfer.menu_inter_company_transfer_root"/>
+              name="Transfer Stock"
+              action="inter_company_stock_transfer.action_inter_company_transfer"
+              parent="inter_company_stock_transfer.menu_inter_company_transfer_root"/>
 
 </odoo>

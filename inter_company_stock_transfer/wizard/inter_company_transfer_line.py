@@ -4,7 +4,6 @@ from odoo import models, fields, api
 
 
 class InterCompanyTransferLine(models.TransientModel):
-
     _name = 'inter.company.transfer.line'
 
     name = fields.Char('Description', index=True)
@@ -12,6 +11,7 @@ class InterCompanyTransferLine(models.TransientModel):
     product_id = fields.Many2one('product.product')
     product_uom = fields.Many2one('uom.uom')
     product_uom_qty = fields.Float('Initial Demand')
+    available_qty = fields.Char("Available Quantity")
 
     @api.onchange('product_id')
     def onchange_product_id(self):
